@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: docker-compose_pi
+  role_name: docker_compose_pi
   author: wagawo
   description: Setup docker-compose for Raspberry Pi
   license: license (MIT)

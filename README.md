@@ -27,7 +27,7 @@ Example Playbook
 ```
     - hosts: localhost
       roles:
-         - { role: wagawo.docker-compose_pi }
+         - { role: wagawo.docker_compose_pi }
 ```
 
 License

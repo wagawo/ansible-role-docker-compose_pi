@@ -29,7 +29,7 @@
 # Makefile実行
 - name: Make
   make:
-    chdir : "{{ docker_compose_checkout_dir }}"
+    chdir: "{{ docker_compose_checkout_dir }}"
 
 # docker-composeの配置 
 - name: move docker-compose
