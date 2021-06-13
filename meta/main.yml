@@ -1,0 +1,21 @@
+galaxy_info:
+  role_name: docker-compose_pi
+  author: wagawo
+  description: Setup docker-compose for Raspberry Pi
+  license: license (MIT)
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+  galaxy_tags: 
+    - docker
+    - compose
+    - orchestration
+    - server
+    - raspbian
+    - raspberry
+    - pi
+dependencies: []
+ 

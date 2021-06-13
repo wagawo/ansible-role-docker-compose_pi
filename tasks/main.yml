@@ -1,0 +1,46 @@
+---
+# 以前にクローンしたリポジトリを削除
+- name: Remove old checkout data
+  file:
+    path: "{{ docker_compose_checkout_dir }}"
+    state: absent
+
+- name: Checkout docker-compose repository
+  git:
+    repo: https://github.com/docker/compose.git
+    dest: "{{ docker_compose_checkout_dir }}"
+    depth: 1
+    version: "{{ docker_compose_version }}"
+
+# Dockerfileのベースイメージを変更
+- name: Edit Dockerfile for build
+  replace:
+    path: "{{ docker_compose_checkout_dir }}/Dockerfile"
+    regexp: "FROM scratch AS bin"
+    replace: "FROM alpine AS bin"
+
+# ビルド用スクリプトファイルの置換
+- name: Replace build script
+  copy:
+    src: files/linux
+    dest: "{{ docker_compose_checkout_dir }}/script/build/linux"
+    backup: yes
+
+# Makefile実行
+- name: Make
+  make:
+    chdir : "{{ docker_compose_checkout_dir }}"
+
+# docker-composeの配置 
+- name: move docker-compose
+  copy:
+    src: "{{ docker_compose_checkout_dir }}/dist/docker-compose-Linux-{{ docker_compose_arch }}"
+    dest: "{{ docker_compose_bin_path }}/docker-compose"
+  become: yes
+
+# バイナリに実行権限を付与
+- name: chmod
+  file:
+    path: "{{ docker_compose_bin_path }}/docker-compose"
+    mode: 0755
+  become: yes
